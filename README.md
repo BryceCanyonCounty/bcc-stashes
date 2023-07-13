@@ -9,8 +9,8 @@
 
 ## Installation
 1. Download this repo/codebase
-2. Extract and place `bcc-scene` into your `resources` folder
-3. Add `ensure bcc-scene` to your `server.cfg` file
+2. Extract and place `bcc-stashes` into your `resources` folder
+3. Add `ensure bcc-stashes` to your `server.cfg` file
 4. Restart your server (unless you have nightly restarts)
 5.  Add Storage locations to Config
 6.   Setup details for each storage separate
