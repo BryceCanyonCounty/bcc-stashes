@@ -11,8 +11,9 @@ VORPInv = exports.vorp_inventory:vorp_inventoryApi()
 JobOnly, Jobs, JobGrades, BlacklistItems = nil, {}, nil, {}
 
 RegisterNetEvent("bcc-stashes:OpenContainer") -- inventory system
-AddEventHandler("bcc-stashes:OpenContainer", function(containerid)
+AddEventHandler("bcc-stashes:OpenContainer", function(containerid, containername, JobNames)
   local _source = source
+  print(containername)
   local Character = VORPcore.getUser(_source).getUsedCharacter
   local job = Character.job
   local jobgrade = Character.jobGrade
@@ -22,20 +23,20 @@ AddEventHandler("bcc-stashes:OpenContainer", function(containerid)
         VORPInv.BlackListCustomAny(containerid, v)
       end
     end
-    Jobs = v.JobName
+    Jobs = JobNames
     JobGrades = v.JobGrades
     BlacklistItems = v.Items
     if v.Shared then
       if v.NotAllowedItems then
-        VORPInv.registerInventory(containerid, v.ContainerName, 100, true, true, true, false, false, true, false)
+        VORPInv.registerInventory(containerid, containername, 100, true, true, true, false, false, true, false)
       else
-        VORPInv.registerInventory(containerid, v.ContainerName, 100, true, true, true, false, false, false, false)
+        VORPInv.registerInventory(containerid, containername, 100, true, true, true, false, false, false, false)
       end
     else
       if v.NotAllowedItems then
-        VORPInv.registerInventory(containerid, v.ContainerName, 100, true, false, true, false, false, true, false)
+        VORPInv.registerInventory(containerid, containername, 100, true, false, true, false, false, true, false)
       else
-        VORPInv.registerInventory(containerid, v.ContainerName, 100, true, false, true, false, false, false, false)
+        VORPInv.registerInventory(containerid, containername, 100, true, false, true, false, false, false, false)
       end
     end
     if v.JobOnly then
@@ -46,6 +47,7 @@ AddEventHandler("bcc-stashes:OpenContainer", function(containerid)
   end
   Wait(250)
   if JobOnly then
+    print(json.encode(Jobs))
     if CheckTable(Jobs, job) then
       if jobgrade >= JobGrades then
         VORPInv.OpenInv(_source, containerid)
@@ -59,6 +61,32 @@ AddEventHandler("bcc-stashes:OpenContainer", function(containerid)
     VORPInv.OpenInv(_source, containerid)
   end
 end)
+
+RegisterServerEvent("vorp_inventory:MoveToCustom", function(obj)
+  print('test')
+  local _source = source
+  local Character = VORPcore.getUser(_source).getUsedCharacter
+  local item = json.decode(obj)
+
+  VORPcore.AddWebhook(Config.WebhookInfo.Title, Config.WebhookInfo.Webhook,
+    Character.firstname ..
+    " " .. Character.lastname .. _U("Moved") .. item.number .. " " .. item.item.name .. _U("ToStash"),
+    Config.WebhookInfo.Color,
+    Config.WebhookInfo.Name, Config.WebhookInfo.Logo, Config.WebhookInfo.FooterLogo, Config.WebhookInfo.Avatar)
+  print('finished moved')
+end)
+RegisterServerEvent("vorp_inventory:TakeFromCustom", function(obj)
+  local _source = source
+  local Character = VORPcore.getUser(_source).getUsedCharacter
+  local item = json.decode(obj)
+
+  VORPcore.AddWebhook(Config.WebhookInfo.Title, Config.WebhookInfo.Webhook,
+    Character.firstname ..
+    " " .. Character.lastname .. _U("Took") .. item.number .. " " .. item.item.name .. _U("ToStash"),
+    Config.WebhookInfo.Color,
+    Config.WebhookInfo.Name, Config.WebhookInfo.Logo, Config.WebhookInfo.FooterLogo, Config.WebhookInfo.Avatar)
+end)
+
 
 function CheckTable(table, element)
   for k, v in pairs(table) do
