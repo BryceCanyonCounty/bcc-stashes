@@ -11,7 +11,7 @@ VORPInv = exports.vorp_inventory:vorp_inventoryApi()
 JobOnly, Jobs, JobGrades, BlacklistItems = nil, {}, nil, {}
 
 RegisterNetEvent("bcc-stashes:OpenContainer") -- inventory system
-AddEventHandler("bcc-stashes:OpenContainer", function(containerid, containername, JobNames)
+AddEventHandler("bcc-stashes:OpenContainer", function(containerid, containername, limit, JobNames)
   local _source = source
   print(containername)
   local Character = VORPcore.getUser(_source).getUsedCharacter
@@ -28,15 +28,15 @@ AddEventHandler("bcc-stashes:OpenContainer", function(containerid, containername
     BlacklistItems = v.Items
     if v.Shared then
       if v.NotAllowedItems then
-        VORPInv.registerInventory(containerid, containername, 100, true, true, true, false, false, true, false)
+        VORPInv.registerInventory(containerid, containername, limit, true, true, true, false, false, true, false)
       else
-        VORPInv.registerInventory(containerid, containername, 100, true, true, true, false, false, false, false)
+        VORPInv.registerInventory(containerid, containername, limit, true, true, true, false, false, false, false)
       end
     else
       if v.NotAllowedItems then
-        VORPInv.registerInventory(containerid, containername, 100, true, false, true, false, false, true, false)
+        VORPInv.registerInventory(containerid, containername, limit, true, false, true, false, false, true, false)
       else
-        VORPInv.registerInventory(containerid, containername, 100, true, false, true, false, false, false, false)
+        VORPInv.registerInventory(containerid, containername, limit, true, false, true, false, false, false, false)
       end
     end
     if v.JobOnly then
