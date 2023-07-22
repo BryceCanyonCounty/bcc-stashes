@@ -18,7 +18,7 @@ Citizen.CreateThread(function()
             if distance < 1.5 and not isDead then
                 PromptGroup:ShowGroup(_U("OpenStorage"))
                 if firstprompt:HasCompleted() then
-                    TriggerServerEvent("bcc-stashes:OpenContainer", v.containerid, v.ContainerName, v.JobName)
+                    TriggerServerEvent("bcc-stashes:OpenContainer", v.containerid, v.limit,v.ContainerName, v.JobName)
                 end
             end
         end
