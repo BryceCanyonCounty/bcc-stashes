@@ -12,7 +12,8 @@ Spots = {
         JobGrades = 3,                                 -- If using Job Only, Job grade must be this rank or higher to access
         Shared = true,                                 -- Shared Storage
         NotAllowedItems = true,                        --Blacklist below items, Not in use yet
-        Items = { 'canteen' }                          --Blacklisted Items
+        Items = { 'canteen' },                         --Blacklisted Items
+        limit = 100
 
     },
     teststorage2 = {
@@ -24,7 +25,9 @@ Spots = {
         JobGrades = 3,                                 -- If using Job Only, Job grade must be this rank or higher to access
         Shared = true,                                 -- Shared Storage
         NotAllowedItems = false,                       --Blacklist below items,Not in use yet
-        Items = {}                                     --Blacklisted Items
+        Items = {},                                     --Blacklisted Items
+        limit = 100
+
     },
 }
 
