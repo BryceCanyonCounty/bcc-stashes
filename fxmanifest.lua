@@ -22,5 +22,6 @@ server_scripts {
 dependencies {
 	'vorp_core',
 	'vorp_inventory',
-	'vorp_utils'
+	'vorp_utils',
+	'bcc-crypt'
 }
