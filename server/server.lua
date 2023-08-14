@@ -83,7 +83,6 @@ VORPcore.addRpcCallback('CreateStash', function(source, cb, args)
   local db = MySQL.query.await(
     "INSERT INTO stashes (`id`, `name`,`propname`,`x`,`y`,`z`,`h` ) VALUES ( @id,@name,@hash,@x,@y,@z,@h) RETURNING *;",
     param)
-  print(Uuid)
   cb(db)
 end)
 
@@ -194,7 +193,7 @@ RegisterServerEvent("vorp_inventory:MoveToCustom", function(obj)
   local item = json.decode(obj)
   VORPcore.AddWebhook(Config.WebhookInfo.Title, Config.WebhookInfo.Webhook,
     Character.firstname ..
-    " " .. Character.lastname .. _U("Moved") .. item.number .. " " .. item.item.name .. _U("ToStash") .. stashid,
+    " " .. Character.lastname .. _U("Moved") .. item.number .. " " .. item.item.name .. _U("ToStash"),
     Config.WebhookInfo.Color,
     Config.WebhookInfo.Name, Config.WebhookInfo.Logo, Config.WebhookInfo.FooterLogo, Config.WebhookInfo.Avatar)
 end)
