@@ -5,6 +5,6 @@ Locales['en'] = {
     WrongJob = 'Wrong Job',
     Moved = ' moved ',
     Took = ' took ',
-    ToStash = ' to the stash'
+    ToStash = ' to the stash '
 
 }
