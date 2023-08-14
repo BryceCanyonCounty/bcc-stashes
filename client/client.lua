@@ -37,7 +37,7 @@ CreateThread(function()
 end)
 
 RegisterNetEvent('bcc-stashes:PlaceContainer', function(name, hash)
-    local x, y, z = table.unpack(GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 2.0, -1.55))
+    local x, y, z = table.unpack(GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 2.0, -0.5))
     local h = GetEntityHeading(PlayerPedId())
     local obj = VORPutils.Objects:Create(hash, x, y, z, h, true, 'standard')
     obj:PlaceOnGround(true)
@@ -48,19 +48,19 @@ RegisterNetEvent('bcc-stashes:PlaceContainer', function(name, hash)
     end, { Name = name, Hash = hash, X = x, Y = y, Z = z, H = h })
 end)
 
-AddEventHandler('CharacterSelect', function()
+RegisterNetEvent("vorp:SelectedCharacter") -- Event for checking jail and job on character select
+AddEventHandler("vorp:SelectedCharacter", function()
+    local obj
+    print('character is seleced')
     VORPcore.RpcCall('GetStashes', function(result)
-        if type(result) == 'table' then
-            for k, v in pairs(result) do
-                local x, y, z = table.unpack(GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 2.0, -1.55))
-                local h = GetEntityHeading(PlayerPedId())
-                local obj = VORPutils.Objects:Create(result[1].propname, x, y, z, h, true, 'standard')
-                obj:PlaceOnGround(true)
-                Entity(obj:GetObj()).state:set('id', result[1].id, true)
-                table.insert(Chests, { Entityid = obj:GetObj(), Hash = result[1].propname })
-                TriggerServerEvent('bcc-stashes:registerInventory', result[1].id, result[1].propname)
-            end
+        for k, v in pairs(result) do
+            obj = VORPutils.Objects:Create(v.propname, v.x, v.y, v.z,
+                v.h, true, 'standard')
+            Entity(obj:GetObj()).state:set('id', v.id, true)
+            table.insert(Chests, { Entityid = obj:GetObj(), Hash = v.propname })
+            TriggerServerEvent('bcc-stashes:registerInventory', v.id, v.propname)
         end
+        obj:PlaceOnGround(true)
     end)
 end)
 
