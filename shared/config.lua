@@ -35,10 +35,11 @@ Config.Spots = {
     },
 }
 
+
 Config.Props = {
     p_chest01x =                                 -- hash of prop
     {
-        dbname = 'Steak',                        ---Name of db item
+        dbname = 'chest1',                        ---Name of db item
         hash = 'p_chest01x',                     -- hash of prop
         containerid = "Stash2-1",                --Unique Container ID
         ContainerName = "Stash1",                --Name shown in inventory UI
@@ -54,7 +55,7 @@ Config.Props = {
     p_chest02x = -- hash of prop
 
     {
-        dbname = 'Wood',                         ---Name of db item
+        dbname = 'chest2',                         ---Name of db item
         hash = 'p_chest02x',                     -- hash of prop
         containerid = "Stash2-2",                --Unique Container ID
         ContainerName = "Stash2",                --Name shown in inventory UI
