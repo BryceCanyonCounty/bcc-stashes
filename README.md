@@ -23,3 +23,4 @@ All configurations available in `config.lua`
  - Vorp Core
  - Vorp Inventory
  - Vorp Utils
+ - Bcc Crypt
