@@ -8,6 +8,11 @@ client_scripts {
 	'client/client.lua'
 }
 
+server_scripts {
+	'server/server.lua',
+	'@oxmysql/lib/MySQL.lua',
+
+}
 
 shared_script {
 	'shared/config.lua',
@@ -15,13 +20,11 @@ shared_script {
 	'shared/en.lua'
 }
 
-server_scripts {
-	'server/server.lua'
-}
+
 
 dependencies {
 	'vorp_core',
 	'vorp_inventory',
 	'vorp_utils',
-	'bcc-crypt'
+	'bcc-utils'
 }
