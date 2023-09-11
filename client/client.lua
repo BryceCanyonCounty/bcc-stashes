@@ -52,7 +52,8 @@ RegisterNetEvent("vorp:SelectedCharacter") -- Event for checking jail and job on
 AddEventHandler("vorp:SelectedCharacter", function()
     local obj
     print('character is seleced')
-    VORPcore.RpcCall('GetStashes', function(result)
+    local ClientRPC = exports.vorp_core:ClientRpcCall()
+     ClientRPC.Callback.TriggerAwait('GetStashes', function(result)
         for k, v in pairs(result) do
             obj = VORPutils.Objects:Create(v.propname, v.x, v.y, v.z,
                 v.h, true, 'standard')

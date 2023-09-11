@@ -10,6 +10,8 @@ crypt = exports['bcc-crypt'].install()
 
 local stashid
 
+local ServerRPC = exports.vorp_core:ServerRpcCall()
+
 VORPInv = exports.vorp_inventory:vorp_inventoryApi()
 
 JobOnly, Jobs, JobGrades, BlacklistItems, Uuid = nil, {}, nil, {}, nil
@@ -62,7 +64,7 @@ RegisterNetEvent('bcc-stashes:SaveToDB', function(name, hash, x, y, z, h)
 end)
 
 
-VORPcore.addRpcCallback('CreateStash', function(source, cb, args)
+ServerRPC.Callback.Register('CreateStash', function(source, cb, args)
   local _source = source
   local character = VORPcore.getUser(_source).getUsedCharacter
   local charId = character.charIdentifier
@@ -78,6 +80,7 @@ VORPcore.addRpcCallback('CreateStash', function(source, cb, args)
   }
 
 
+
   -- args contains a table of stuff you're sending over from the client. (see args as the last argument in the RPC call.
 
   local db = MySQL.query.await(
@@ -86,13 +89,13 @@ VORPcore.addRpcCallback('CreateStash', function(source, cb, args)
   cb(db)
 end)
 
-
-VORPcore.addRpcCallback('GetStashes', function(source, cb)
+ServerRPC.Callback.Register('GetStashes', function(source, cb)
   local _source = source
   local result = MySQL.query.await(
     'SELECT * FROM stashes')
   cb(result)
 end)
+
 
 RegisterNetEvent("bcc-stashes:OpenPropStash") -- inventory system
 AddEventHandler("bcc-stashes:OpenPropStash", function(containerid, JobNames)
