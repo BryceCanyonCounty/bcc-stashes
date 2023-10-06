@@ -1,27 +1,26 @@
 local VORPcore = {}
-
 TriggerEvent("getCore", function(core)
   VORPcore = core
 end)
-
 local VORPInv = {}
-
 crypt = exports['bcc-crypt'].install()
 
 local stashid
 
+local ServerRPC = exports.vorp_core:ServerRpcCall()
+
 VORPInv = exports.vorp_inventory:vorp_inventoryApi()
 
 JobOnly, Jobs, JobGrades, BlacklistItems, Uuid = nil, {}, nil, {}, nil
-
 CreateThread(function()
   for k, v in pairs(Config.Props) do
+    print(v)
     VORPInv.RegisterUsableItem(v.dbname, function(data)
+      print('used item')
       TriggerClientEvent('bcc-stashes:PlaceContainer', data.source, v.ContainerName, v.hash)
     end)
   end
 end)
-
 RegisterNetEvent('bcc-stashes:registerInventory', function(id, hash)
   if Config.Props[hash].Shared then
     if Config.Props[hash].NotAllowedItems then
@@ -42,8 +41,6 @@ RegisterNetEvent('bcc-stashes:registerInventory', function(id, hash)
     end
   end
 end)
-
-
 RegisterNetEvent('bcc-stashes:SaveToDB', function(name, hash, x, y, z, h)
   Uuid = crypt.uuid4()
   local param = {
@@ -55,17 +52,18 @@ RegisterNetEvent('bcc-stashes:SaveToDB', function(name, hash, x, y, z, h)
     ['z'] = z,
     ['h'] = h
   }
-
   local db = MySQL.query.await(
     "INSERT INTO stashes (`id`, `name`,`propname`,`x`,`y`,`z`,`h` ) VALUES ( @id,@name,@hash,@x,@y,@z,@h) RETURNING *;",
     param)
 end)
 
 
-VORPcore.addRpcCallback('CreateStash', function(source, cb, args)
+ServerRPC.Callback.Register('CreateStash', function(source, cb, args)
+  print('hit server side rpc')
   local _source = source
   local character = VORPcore.getUser(_source).getUsedCharacter
   local charId = character.charIdentifier
+  print(json.encode(args))
   Uuid = crypt.uuid4()
   local param = {
     ['id'] = Uuid,
@@ -77,7 +75,6 @@ VORPcore.addRpcCallback('CreateStash', function(source, cb, args)
     ['h'] = args.H
   }
 
-
   -- args contains a table of stuff you're sending over from the client. (see args as the last argument in the RPC call.
 
   local db = MySQL.query.await(
@@ -87,17 +84,18 @@ VORPcore.addRpcCallback('CreateStash', function(source, cb, args)
 end)
 
 
-VORPcore.addRpcCallback('GetStashes', function(source, cb)
+ServerRPC.Callback.Register('GetStashes', function(source, cb)
   local _source = source
   local result = MySQL.query.await(
     'SELECT * FROM stashes')
   cb(result)
 end)
 
+
 RegisterNetEvent("bcc-stashes:OpenPropStash") -- inventory system
 AddEventHandler("bcc-stashes:OpenPropStash", function(containerid, JobNames)
+  print(containerid)
   local _source = source
-
   local Character = VORPcore.getUser(_source).getUsedCharacter
   local job = Character.job
   local jobgrade = Character.jobGrade
@@ -133,7 +131,6 @@ AddEventHandler("bcc-stashes:OpenPropStash", function(containerid, JobNames)
     stashid = containerid
   end
 end)
-
 RegisterNetEvent("bcc-stashes:OpenContainer") -- inventory system
 AddEventHandler("bcc-stashes:OpenContainer", function(containerid, containername, limit, JobNames)
   local _source = source
@@ -185,8 +182,6 @@ AddEventHandler("bcc-stashes:OpenContainer", function(containerid, containername
     stashid = containerid
   end
 end)
-
-
 RegisterServerEvent("vorp_inventory:MoveToCustom", function(obj)
   local _source = source
   local Character = VORPcore.getUser(_source).getUsedCharacter
@@ -201,15 +196,12 @@ RegisterServerEvent("vorp_inventory:TakeFromCustom", function(obj)
   local _source = source
   local Character = VORPcore.getUser(_source).getUsedCharacter
   local item = json.decode(obj)
-
   VORPcore.AddWebhook(Config.WebhookInfo.Title, Config.WebhookInfo.Webhook,
     Character.firstname ..
     " " .. Character.lastname .. _U("Took") .. item.number .. " " .. item.item.name .. _U("ToStash") .. stashid,
     Config.WebhookInfo.Color,
     Config.WebhookInfo.Name, Config.WebhookInfo.Logo, Config.WebhookInfo.FooterLogo, Config.WebhookInfo.Avatar)
 end)
-
-
 function CheckTable(table, element)
   for k, v in pairs(table) do
     if v == element then
