@@ -2,18 +2,11 @@ VORPutils = {}
 TriggerEvent("getUtils", function(utils)
     VORPutils = utils
 end)
+ClientRPC = exports.vorp_core:ClientRpcCall() --[[@as ClientRPC]] -- for intellisense
 
--- at the top of your file
-local VORPcore = {}
-
-TriggerEvent("getCore", function(core)
-    VORPcore = core
-end)
 
 local Chests = {}
-
 local OpenPrompt
-
 CreateThread(function()
     local PromptGroup = VORPutils.Prompts:SetupPromptGroup()
     local firstprompt = PromptGroup:RegisterPrompt(_U("OpenStorage"), 0x760A9C6F, 1, 1, true, 'hold',
@@ -23,7 +16,6 @@ CreateThread(function()
         local ped = PlayerPedId()
         local pedpos = GetEntityCoords(PlayerPedId(), true)
         local isDead = IsEntityDead(ped)
-
         for k, v in pairs(Config.Spots) do
             local distance = GetDistanceBetweenCoords(v.Pos.x, v.Pos.y, v.Pos.z, pedpos.x, pedpos.y, pedpos.z, true)
             if distance < 1.5 and not isDead then
@@ -35,35 +27,36 @@ CreateThread(function()
         end
     end
 end)
-
 RegisterNetEvent('bcc-stashes:PlaceContainer', function(name, hash)
+    print('placing container')
     local x, y, z = table.unpack(GetOffsetFromEntityInWorldCoords(PlayerPedId(), 0.0, 2.0, -0.5))
     local h = GetEntityHeading(PlayerPedId())
     local obj = VORPutils.Objects:Create(hash, x, y, z, h, true, 'standard')
     obj:PlaceOnGround(true)
+    local tobj = obj:GetObj()
+    local objcoords = GetEntityCoords(tobj)
     table.insert(Chests, { Entityid = obj:GetObj(), Hash = hash })
-    VORPcore.RpcCall('CreateStash', function(result)
+    ClientRPC.Callback.TriggerAsync('CreateStash', function(result)
         Entity(obj:GetObj()).state:set('id', result[1].id, true)
         TriggerServerEvent('bcc-stashes:registerInventory', result[1].id, result[1].propname)
-    end, { Name = name, Hash = hash, X = x, Y = y, Z = z, H = h })
+    end, { Name = name, Hash = hash, X = objcoords.x, Y = objcoords.y, Z = objcoords.z, H = h })
 end)
 
-RegisterNetEvent("vorp:SelectedCharacter") -- Event for checking jail and job on character select
-AddEventHandler("vorp:SelectedCharacter", function()
-    local obj
+RegisterNetEvent("vorp:SelectedCharacter", function()
     print('character is seleced')
-    VORPcore.RpcCall('GetStashes', function(result)
+    ClientRPC.Callback.TriggerAsync('GetStashes', function(result)
         for k, v in pairs(result) do
-            obj = VORPutils.Objects:Create(v.propname, v.x, v.y, v.z,
+            local obj = VORPutils.Objects:Create(v.propname, v.x, v.y, v.z,
                 v.h, true, 'standard')
+
+            obj:PlaceOnGround(true)
+
             Entity(obj:GetObj()).state:set('id', v.id, true)
             table.insert(Chests, { Entityid = obj:GetObj(), Hash = v.propname })
             TriggerServerEvent('bcc-stashes:registerInventory', v.id, v.propname)
         end
-        obj:PlaceOnGround(true)
     end)
 end)
-
 CreateThread(function()
     local distance, TargetPrompt
     while true do
@@ -93,8 +86,6 @@ CreateThread(function()
         end
     end
 end)
-
-
 AddEventHandler('bcc-stashes:FocusPrompt', function(TargetPrompt)
     local str = CreateVarString(10, 'LITERAL_STRING', 'Open')
     OpenPrompt = PromptRegisterBegin()
