@@ -2,7 +2,7 @@ VORPutils = {}
 TriggerEvent("getUtils", function(utils)
     VORPutils = utils
 end)
-ClientRPC = exports.vorp_core:ClientRpcCall() --[[@as ClientRPC]] -- for intellisense
+ClientRPC = exports.vorp_core:ClientRpcCall()
 
 
 local Chests = {}
