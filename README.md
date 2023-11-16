@@ -2,6 +2,9 @@
 
 > A RedM script for stashes
 
+## Dependencies
+-  Requires MariaDB version 10.11 and above or MySQL verions 8.0 and above.
+
 ## Installation
 1. Download this repo/codebase
 2. Extract and place `bcc-stashes` into your `resources` folder
