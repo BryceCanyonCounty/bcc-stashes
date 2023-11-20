@@ -95,9 +95,9 @@ AddEventHandler("bcc-stashes:OpenPropStash", function(containerid, JobNames, pro
   local jobgrade = Character.jobGrade
   local blacklistItems = {}
   for k, v in pairs(Config.Props) do
-    if v.NotAllowedItems then
-        if v.hash == propHash then
-            JobGrades = v.JobGrades
+    if v.hash == propHash then
+        JobGrades = v.JobGrades
+        if v.NotAllowedItems then
             blacklistItems = v.Items
             for key, value in pairs(blacklistItems) do
                 exports.vorp_inventory:BlackListCustomAny(containerid, value)
@@ -137,9 +137,9 @@ AddEventHandler("bcc-stashes:OpenContainer", function(containerid, containername
     local jobgrade = Character.jobGrade
     local blacklistItems = {}
     for k, v in pairs(Config.Spots) do
-        if v.NotAllowedItems then
-            if containerid == v.containerid then
-                JobGrades = v.JobGrades
+        if containerid == v.containerid then
+            JobGrades = v.JobGrades
+            if v.NotAllowedItems then
                 blacklistItems = v.Items
                 for key, value in pairs(blacklistItems) do
                     exports.vorp_inventory:BlackListCustomAny(containerid, value)
