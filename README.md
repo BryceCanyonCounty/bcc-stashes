@@ -33,7 +33,7 @@
 - [vorp_inventory](https://github.com/VORPCORE/vorp_inventory-lua)
 - [vorp_character](https://github.com/VORPCORE/vorp_character-lua)
 - [bcc-utils](https://github.com/BryceCanyonCounty/bcc-utils)
-
+- [bcc-crypt](https://github.com/BryceCanyonCounty/bcc-crypt)
 
 ## Support
 

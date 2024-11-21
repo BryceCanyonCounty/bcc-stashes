@@ -25,7 +25,9 @@ server_scripts {
 dependencies {
 	'vorp_core',
 	'vorp_inventory',
-	'bcc-utils'
+	'vorp_character',
+	'bcc-utils',
+	'bcc-crypt'
 }
 
 version '1.3.6'
