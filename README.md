@@ -1,15 +1,41 @@
 # BCC - Stashes
 
-> A RedM script for stashes
+> A comprehensive RedM script for managing player stashes with advanced functionality.
 
-## Dependencies
--  Requires MariaDB version 10.11 and above or MySQL verions 8.0 and above.
+## Features
+- Allows players to place, pick up, and manage chests or containers (stashes) in-game.
+- Supports dynamic stash creation and reuse of picked-up chests.
+- Tracks stash state (`pickedup` or not) and updates the database accordingly.
+- Includes a global `StashTable` for efficient server-side management of stashes.
+- Integrated job and grade restrictions for opening stashes.
+- Fully compatible with VORP Inventory and includes blacklisting specific items.
+- Debugging enabled through a `DevMode` for easier troubleshooting.
 
 ## Installation
-1. Download this repo/codebase
-2. Extract and place `bcc-stashes` into your `resources` folder
-3. Add `ensure bcc-stashes` to your `server.cfg` file
-4. Restart your server (unless you have nightly restarts)
 
-## Contributing
-Contributions to the bcc-posse script are welcome! If you have any bug fixes, improvements, or new feature suggestions, feel free to open a pull request on the GitHub repository.
+1. **Download and Extract**:
+   - Download this repository.
+   - Extract and place the `bcc-stashes` folder into your server's `resources` directory.
+
+2. **Automatic Database Setup**:
+   - The script includes a `dbUpdater.lua` file for automatic database creation and updates.
+   - The script will handle creating the necessary database tables automatically upon starting the resource.
+
+3. **Add to Server Configuration**:
+   - Open your `server.cfg` file and add:
+     ```cfg
+     ensure bcc-stashes
+     ```
+   - Restart your server (or wait for your nightly restart).
+
+## Requirements
+- [vorp_core](https://github.com/VORPCORE/vorp-core-lua)
+- [vorp_inventory](https://github.com/VORPCORE/vorp_inventory-lua)
+- [vorp_character](https://github.com/VORPCORE/vorp_character-lua)
+- [bcc-utils](https://github.com/BryceCanyonCounty/bcc-utils)
+
+
+## Support
+
+- For issues, questions, or feature requests, please contact us or open an issue on the GitHub repository.
+- Need more help? Join the bcc discord here: https://discord.gg/VrZEEpBgZJ
