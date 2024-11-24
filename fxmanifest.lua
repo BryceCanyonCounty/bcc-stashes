@@ -2,9 +2,14 @@ fx_version "adamant"
 games { "rdr3" }
 rdr3_warning 'I acknowledge that this is a prerelease build of RedM, and I am aware my resources *will* become incompatible once RedM ships.'
 lua54 'yes'
-author 'Jannings'
+author 'BCC-Team @Jannings'
 
 
+shared_script {
+	'config/config.lua',
+	'locale.lua',
+	'languages/*.lua',
+}
 
 client_scripts {
 	'client/client.lua'
@@ -12,23 +17,17 @@ client_scripts {
 
 server_scripts {
 	'@oxmysql/lib/MySQL.lua',
+	'server/dbUpdater.lua',
 	'server/server.lua',
 
 }
 
-shared_script {
-	'shared/config.lua',
-	'shared/locale.lua',
-	'shared/en.lua'
-}
-
-
-
 dependencies {
 	'vorp_core',
 	'vorp_inventory',
-	'vorp_utils',
-	'bcc-utils'
+	'vorp_character',
+	'bcc-utils',
+	'bcc-crypt'
 }
 
-version '1.2.6'
+version '1.3.6'
