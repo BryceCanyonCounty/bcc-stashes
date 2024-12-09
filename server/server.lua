@@ -1,7 +1,7 @@
 local Core = exports.vorp_core:GetCore()
-BccUtils = exports['bcc-utils'].initiate()
-local discord = BccUtils.Discord.setup(Config.WebhookLink, Config.WebhookTitle, Config.WebhookAvatar)
-crypt = exports['bcc-crypt'].install()
+local BccUtils = exports['bcc-utils'].initiate()
+local Discord = BccUtils.Discord.setup(Config.WebhookLink, Config.WebhookTitle, Config.WebhookAvatar)
+local Crypt = exports['bcc-crypt'].install()
 
 if Config.DevMode then
     -- Helper function for debugging
@@ -12,8 +12,6 @@ else
     -- Define devPrint as a no-op function if DevMode is not enabled
     function devPrint(message) end
 end
-
-local stashid
 
 JobOnly, Jobs, JobGrades, Uuid = nil, {}, nil, nil
 
@@ -146,7 +144,7 @@ BccUtils.RPC:Register('bcc-stashes:CreateStash', function(params, cb, recSource)
             return cb({ success = false, message = "Failed to update existing stash." })
         end
     else
-        stashId = crypt.uuid4()
+        stashId = Crypt.uuid4()
         devPrint("Creating new stash ID: " .. tostring(stashId))
 
         local insertResult = MySQL.query.await("INSERT INTO stashes (`id`, `charid`, `name`, `propname`, `x`, `y`, `z`, `h`, `pickedup`) VALUES (@id, @charid, @name, @propname, @x, @y, @z, @h, 0);", {
@@ -452,7 +450,7 @@ end)
     local Character = Core.getUser(_source).getUsedCharacter
     local item = json.decode(obj)
     devPrint("Moved item to custom stash: " .. tostring(item.item.name) .. " Amount: " .. tostring(item.number))
-    discord:sendMessage(Character.firstname .. " " .. Character.lastname .. _U("Moved") .. item.number .. " " .. item.item.name .. _U("ToStash") .. stashid)
+    Discord:sendMessage(Character.firstname .. " " .. Character.lastname .. _U("Moved") .. item.number .. " " .. item.item.name .. _U("ToStash") .. stashid)
 end)
 
 RegisterServerEvent("vorp_inventory:TakeFromCustom", function(obj)
@@ -461,7 +459,7 @@ RegisterServerEvent("vorp_inventory:TakeFromCustom", function(obj)
     local item = json.decode(obj)
     if stashid then
         devPrint("Took item from custom stash: " .. tostring(item.item.name) .. " Amount: " .. tostring(item.number))
-        discord:sendMessage(Character.firstname .. " " .. Character.lastname .. _U("Took") .. item.number .. " " .. item.item.name .. _U("ToStash") .. stashid)
+        Discord:sendMessage(Character.firstname .. " " .. Character.lastname .. _U("Took") .. item.number .. " " .. item.item.name .. _U("ToStash") .. stashid)
     end
 end)]]--
 

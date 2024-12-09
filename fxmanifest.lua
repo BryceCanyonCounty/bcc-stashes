@@ -1,13 +1,13 @@
-fx_version "adamant"
-games { "rdr3" }
+fx_version 'cerulean'
 rdr3_warning 'I acknowledge that this is a prerelease build of RedM, and I am aware my resources *will* become incompatible once RedM ships.'
+
+game 'rdr3'
 lua54 'yes'
 author 'BCC-Team @Jannings'
 
-
-shared_script {
+shared_scripts {
 	'config/config.lua',
-	'locale.lua',
+	'shared/locale.lua',
 	'languages/*.lua',
 }
 
@@ -19,7 +19,6 @@ server_scripts {
 	'@oxmysql/lib/MySQL.lua',
 	'server/dbUpdater.lua',
 	'server/server.lua',
-
 }
 
 dependencies {
@@ -30,4 +29,4 @@ dependencies {
 	'bcc-crypt'
 }
 
-version '1.3.6'
+version '1.3.7'
