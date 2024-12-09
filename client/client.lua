@@ -1,10 +1,10 @@
-local Core = exports.vorp_core:GetCore()
-BccUtils = exports['bcc-utils'].initiate()
+local BccUtils = exports['bcc-utils'].initiate()
 
 local Chests = {}
 -- Table to store created objects
 local CreatedObjects = {}
-function LoadAnim(dict)
+
+local function LoadAnim(dict)
     RequestAnimDict(dict)
     while not HasAnimDictLoaded(dict) do
         Wait(10)
@@ -24,7 +24,7 @@ end
 
 CreateThread(function()
     local PromptGroup = BccUtils.Prompts:SetupPromptGroup()
-    local firstprompt = PromptGroup:RegisterPrompt(_U("OpenStorage"), Config.keys.g, 1, 1, true, 'hold',
+    local OpenPrompt = PromptGroup:RegisterPrompt(_U("OpenStorage"), BccUtils.Keys[Config.keys.Open], 1, 1, true, 'hold',
         { timedeventhash = "SHORT_TIMED_EVENT" })
 
     -- Iterate through Config.Spots and create objects dynamically
@@ -51,7 +51,7 @@ CreateThread(function()
             local distance = GetDistanceBetweenCoords(v.Pos.x, v.Pos.y, v.Pos.z, pedpos.x, pedpos.y, pedpos.z, true)
             if distance < 1.5 and not isDead then
                 PromptGroup:ShowGroup(_U("OpenStorage"))
-                if firstprompt:HasCompleted() then
+                if OpenPrompt:HasCompleted() then
                     local dict = 'mech_ransack@chest@med@open@crouch@b'
                     LoadAnim(dict)
                     TaskPlayAnim(PlayerPedId(), dict, 'base', 1.0, 1.0, 5000, 17, 1.0, false, false, false)
