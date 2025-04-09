@@ -61,6 +61,7 @@ CreateThread(function()
                         containername = v.ContainerName,
                         limit = v.limit,
                         JobNames = v.JobName
+                        isShare = v.Shared
                     })
 
                     -- Handle the response from the server

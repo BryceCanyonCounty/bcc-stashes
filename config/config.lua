@@ -16,6 +16,7 @@ Config = {
     Spots = {
         teststorage1 = {
             Pos = { x = -325.26, y = 766.19, z = 121.65 }, -- Coords in X,Y,Z
+            StandHeading = 180.0,                           -- Coords for heading of prop
             containerid = "Testing2",                      --Unique Container ID
             ContainerName = "Stash",                       --Name shown in inventory UI
             limit = 250,                                   --Limit of storage
@@ -30,6 +31,7 @@ Config = {
 
         teststorage2 = {
             Pos = { x = -326.89, y = 775.05, z = 121.64 }, -- Coords in X,Y,Z
+            StandHeading = 180.0,                           -- Coords for heading of prop
             containerid = "TestStorage2-2",                --Unique Container ID
             ContainerName = "test Storage",                --Name shown in inventory UI
             limit = 250,                                   --Limit of storage
