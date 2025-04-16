@@ -388,11 +388,11 @@ BccUtils.RPC:Register("bcc-stashes:OpenContainer", function(params, cb, recSourc
         end
 
         local data = {
-            id = containerid,
+            id = vcontainerid,
             name = containername,
             limit = limit,
             acceptWeapons = true,
-            shared = isShare,
+            shared = params.isShare,
             ignoreItemStackLimit = true,
             whitelistItems = false,
             UsePermissions = false,
