@@ -60,7 +60,7 @@ CreateThread(function()
                         containerid = v.containerid,
                         containername = v.ContainerName,
                         limit = v.limit,
-                        JobNames = v.JobName
+                        JobNames = v.JobName,
                         isShare = v.Shared
                     })
 
