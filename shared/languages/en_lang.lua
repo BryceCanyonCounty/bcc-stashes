@@ -1,8 +1,8 @@
 Locales['en_lang'] = {
     OpenStorage = 'Open Storage',
     Container = 'Container',
-    WrongJobGrade = 'Wrong Job Grade',
-    WrongJob = 'Wrong Job',
+    WrongJobGrade = 'Wrong Job Grade to use this item',
+    WrongJob = 'Wrong Job to use this item',
     Moved = ' moved ',
     Took = ' took ',
     ToStash = ' to the stash ',
@@ -24,5 +24,7 @@ Locales['en_lang'] = {
     chestAlreadyPickedUp = "This chest has already been picked up.",
     ChestNotOwned = "You cannot pick up a chest that does not belong to you!",
     ChestNotFound = "The chest you are trying to pick up could not be found.",
-    ChestNotOwnedOrNotFound = "This chest does not belong to you."
+    ChestNotOwnedOrNotFound = "This chest does not belong to you.",
+    ChestMustBeEmpty = "Chest must be empty before you can pick it up.",
+    jobRestriction = "Job restrictions are not configured properly.",
 }

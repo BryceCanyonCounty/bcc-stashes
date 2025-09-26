@@ -1,8 +1,8 @@
 Locales['ro_lang'] = {
     OpenStorage = 'Deschide Cufarul',
     Container = 'Cufar',
-    WrongJobGrade = 'Nu ai gradul meseriei necesar',
-    WrongJob = 'Nu ai meseria necesara',
+    WrongJobGrade = 'Nu ai gradul meseriei necesar pentru a folosi acest obiect',
+    WrongJob = 'Nu ai meseria necesara pentru a folosi acest obiect',
     Moved = ' a mutat ',
     Took = ' a luat ',
     ToStash = ' in cufarul ',
@@ -22,7 +22,9 @@ Locales['ro_lang'] = {
     stashCreationFailed = "Nu s-a reusit crearea cufarului.",
     chestUpdateSuccess = "Locatia si starea cufarului au fost actualizate cu succes.",
     chestAlreadyPickedUp = "Acest cufar a fost deja ridicat.",
-    ChestNotOwned = "You cannot pick up a chest that does not belong to you!",
-    ChestNotFound = "The chest you are trying to pick up could not be found.",
-    ChestNotOwnedOrNotFound = "This chest does not belong to you."
+    ChestNotOwned = "Nu poți ridica un cufar care nu îti aparține!",
+    ChestNotFound = "Cufarul pe care încerci sa îl ridici nu a fost gasit.",
+    ChestNotOwnedOrNotFound = "Acest cufar nu îti apartine.",
+    ChestMustBeEmpty = "Cufarul trebuie sa fie gol înainte de a-l putea ridica.",
+    jobRestriction = "Restrictiile de meserie nu sunt configurate corespunzator."
 }

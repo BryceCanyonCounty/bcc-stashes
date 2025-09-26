@@ -1,8 +1,8 @@
 Locales['de_lang'] = {
-    OpenStorage = 'Lager öffnen',
+    OpenStorage = 'Lager oeffnen',
     Container = 'Container',
-    WrongJobGrade = 'Falscher Job-Rang',
-    WrongJob = 'Falscher Job',
+    WrongJobGrade = 'Falscher Job-Rang um diesen Gegenstand zu verwenden',
+    WrongJob = 'Falscher Job um diesen Gegenstand zu verwenden',
     Moved = ' eingelagert ',
     Took = ' entnommen ',
     ToStash = ' in Lager ',
@@ -24,5 +24,7 @@ Locales['de_lang'] = {
     chestAlreadyPickedUp = "Diese Kiste wurde bereits aufgehoben.",
     ChestNotOwned = "Du kannst keine Kiste aufheben, die nicht dir gehört!",
     ChestNotFound = "Die Kiste, die du versuchst aufzuheben, kann nicht gefunden werden.",
-    ChestNotOwnedOrNotFound = "Diese Kiste gehört nicht  zu dir."
+    ChestNotOwnedOrNotFound = "Diese Kiste gehört nicht  zu dir.",
+    ChestMustBeEmpty = "Die Kiste muss leer sein, bevor du sie aufheben kannst.",
+    jobRestriction = "Job-Einschraenkungen sind nicht ordnungsgemaess konfiguriert."
 }
