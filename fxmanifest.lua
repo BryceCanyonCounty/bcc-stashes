@@ -6,9 +6,10 @@ lua54 'yes'
 author 'BCC-Team @Jannings'
 
 shared_scripts {
-	'config/config.lua',
+    'shared/configs/*.lua',
+    'shared/debug_init.lua',
 	'shared/locale.lua',
-	'languages/*.lua',
+	'shared/languages/*.lua',
 }
 
 client_scripts {
@@ -26,7 +27,6 @@ dependencies {
 	'vorp_inventory',
 	'vorp_character',
 	'bcc-utils',
-	'bcc-crypt'
 }
 
-version '1.3.8'
+version '2.0.0'
